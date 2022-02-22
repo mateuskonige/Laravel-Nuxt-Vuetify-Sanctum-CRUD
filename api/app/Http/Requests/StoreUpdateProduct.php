@@ -24,7 +24,7 @@ class StoreUpdateProduct extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:products|min:2|max:64',
+            'name' => ['required', 'min:2', 'max:64', `unique:products,id,$this->segments(3)`],
             'amount' => 'required|numeric'
         ];
     }

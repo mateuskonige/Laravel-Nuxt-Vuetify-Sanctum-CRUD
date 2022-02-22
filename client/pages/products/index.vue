@@ -7,7 +7,7 @@
 
         <Loading v-if="$fetchState.pending" />
         <div v-else>
-            <div class="text-center my-4">
+            <div class="text-center my-6">
                 <v-pagination
                     @input="onPageChange"
                     v-model="pagination.current"

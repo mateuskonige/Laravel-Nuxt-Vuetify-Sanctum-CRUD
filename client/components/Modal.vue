@@ -1,9 +1,12 @@
  <template>
     <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                Add
+            <v-btn color="primary" dark v-bind="attrs" v-on="on" class="hidden-sm-and-down">
+                <v-icon dark>mdi-plus</v-icon>Add
                 <slot />
+            </v-btn>
+            <v-btn fab color="primary" dark v-bind="attrs" v-on="on" class="hidden-md-and-up">
+                <v-icon dark>mdi-plus</v-icon>
             </v-btn>
         </template>
 

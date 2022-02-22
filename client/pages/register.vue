@@ -4,13 +4,21 @@
             <v-card-title class="text-h5">Register</v-card-title>
             <v-form ref="form" @submit.prevent="userRegister">
                 <v-card-text>
-                    <v-text-field outlined type="text" name="Name" label="Name" v-model="form.name"></v-text-field>
+                    <v-text-field
+                        outlined
+                        type="text"
+                        name="Name"
+                        label="Name"
+                        :error-messages="errors.name"
+                        v-model="form.name"
+                    ></v-text-field>
 
                     <v-text-field
                         outlined
                         type="email"
                         name="E-mail"
                         label="E-mail"
+                        :error-messages="errors.email"
                         v-model="form.email"
                     ></v-text-field>
                     <v-text-field
@@ -18,6 +26,7 @@
                         type="password"
                         name="Password"
                         label="Password"
+                        :error-messages="errors.password"
                         v-model="form.password"
                     ></v-text-field>
                     <v-text-field
@@ -64,15 +73,20 @@ export default {
                 let errors = []
                 await this.$axios.$get('sanctum/csrf-cookie')
                 await this.$axios.$post('/register', this.form)
-                    .then((resp) => { })
+                    .then((resp) => {
+                        this.errors = []
+                    })
                     .catch((err) => {
                         if (err.response.status = 422) {
-                            errors = err.response.data.errors
+                            this.errors = err.response.data.errors
                         }
                     })
-                this.errors = errors
                 await this.$auth.loginWith('laravelSanctum', { data: this.form })
-            } catch (error) { }
+                this.$toast.success('Successfully authenticated', { duration: 2000 })
+
+            } catch (error) {
+
+            }
         }
     }
 };

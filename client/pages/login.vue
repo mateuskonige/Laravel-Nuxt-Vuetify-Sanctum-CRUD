@@ -4,13 +4,13 @@
             <v-card-title class="text-h5">Login</v-card-title>
             <v-form ref="form" @submit.prevent="userLogin">
                 <v-card-text>
-                    <span v-if="errors">{{ errors }}</span>
                     <v-text-field
                         outlined
                         type="email"
                         name="E-mail"
                         label="E-mail"
                         v-model="form.email"
+                        :error-messages="errors.email"
                         prepend-inner-icon="mdi-email"
                     ></v-text-field>
                     <v-text-field
@@ -19,6 +19,7 @@
                         name="Password"
                         label="Password"
                         v-model="form.password"
+                        :error-messages="errors.password"
                         prepend-inner-icon="mdi-key"
                     ></v-text-field>
                 </v-card-text>
@@ -47,16 +48,21 @@ export default {
                 email: '',
                 password: '',
             },
-            errors: ''
+            errors: []
         }
     },
     methods: {
         async userLogin() {
             try {
                 await this.$auth.loginWith('laravelSanctum', { data: this.form })
-                this.$toast.success('Successfully authenticated')
+                this.errors = []
+                this.$toast.success('Successfully authenticated', { duration: 2000 })
             } catch (err) {
-                this.$toast.error('Error while authenticating')
+                this.$toast.error('Error while authenticating', { duration: 2000 })
+                if (err.response.status = 422) {
+                    this.errors = err.response.data.errors
+                    console.log(this.errors)
+                }
             }
         }
     }

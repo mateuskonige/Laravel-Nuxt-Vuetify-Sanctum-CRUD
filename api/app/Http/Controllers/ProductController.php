@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ProductResource::collection(Product::paginate(5));
+        return ProductResource::collection(Product::paginate(13));
     }
 
     /**
@@ -37,9 +37,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return new ProductResource($product);
     }
 
     /**
@@ -49,9 +50,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreUpdateProduct $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update($request->validated());
+
+        return new ProductResource($product);
     }
 
     /**

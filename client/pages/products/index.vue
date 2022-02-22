@@ -7,11 +7,12 @@
 
         <Loading v-if="$fetchState.pending" />
         <div v-else>
-            <div class="text-center mb-4">
+            <div class="text-center my-4">
                 <v-pagination
                     @input="onPageChange"
                     v-model="pagination.current"
                     :length="pagination.total"
+                    :total-visible="7"
                     circle
                 ></v-pagination>
             </div>
@@ -61,19 +62,6 @@ export default {
         reFetch() {
             this.dialog = false
             this.$fetch();
-        },
-        async editProduct(e) {
-            console.log(e)
-            this.dialog = true
-            this.form = this.products[e]
-        },
-        async storeProduct(id) {
-            try {
-                await this.$axios.$patch(`/api/products/${id}`)
-            } catch (err) {
-                console.log(err)
-            }
-
         }
     },
     components: { Loading, SimpleTable, Modal }

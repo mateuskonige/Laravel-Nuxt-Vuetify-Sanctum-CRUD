@@ -13,7 +13,7 @@
                 <slot />
             </v-card-title>
 
-            <v-form @submit.prevent="store()">
+            <v-form ref="form" lazy-validation @submit.prevent="store()">
                 <v-card-text>
                     <v-text-field
                         outlined
@@ -58,12 +58,14 @@ export default {
             errors: [],
         }
     },
+
     methods: {
         async store() {
             try {
                 await this.$axios.$post('api/products', this.form)
+                this.$refs.form.reset()
+                this.errors = []
                 this.$emit('saved')
-                this.form = {}
                 this.$toast.success('Successfully added new product', { duration: 2000 })
             } catch (err) {
                 if (err.response.status = 422) {

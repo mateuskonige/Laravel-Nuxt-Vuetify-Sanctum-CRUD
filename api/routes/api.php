@@ -19,6 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+/**
+ * Products
+ */
+
 Route::get('/products', [ProductController::class, 'index'])
     ->middleware('auth:sanctum')
     ->name('products.index');
@@ -26,6 +31,14 @@ Route::get('/products', [ProductController::class, 'index'])
 Route::post('/products', [ProductController::class, 'store'])
     ->middleware('auth:sanctum')
     ->name('products.store');
+
+Route::get('/products/{id}', [ProductController::class, 'show'])
+    ->middleware('auth:sanctum')
+    ->name('products.show');
+
+Route::put('/products/{id}', [ProductController::class, 'update'])
+    ->middleware('auth:sanctum')
+    ->name('products.update');
 
 Route::delete('/products/{id}', [ProductController::class, 'destroy'])
     ->middleware('auth:sanctum')

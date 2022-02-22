@@ -15,10 +15,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(10)->create();
-
-        DB::table('products')->insert([
-            'name' => 'Banana',
-            'Amount' => 1.89
-        ]);
+        \App\Models\Product::factory(100)->create();
     }
 }

@@ -14,8 +14,12 @@
                         <td>{{ product.name }}</td>
                         <td>R$ {{ product.amount }}</td>
                         <td class="text-right">
-                            <v-btn depressed color="warning" @click="editProduct(product.id)">
-                                <v-icon light>mdi-pencil</v-icon>
+                            <v-btn
+                                depressed
+                                color="info"
+                                :to="{ name: 'products-id', params: { id: product.id } }"
+                            >
+                                <v-icon light>mdi-eye</v-icon>
                             </v-btn>
                             <v-btn depressed color="error" @click="deleteProduct(product.id)">
                                 <v-icon light>mdi-delete</v-icon>
@@ -33,9 +37,6 @@ export default {
     props: ['products', 'form'],
 
     methods: {
-        async editProduct(id) {
-            this.$emit("editProduct", id)
-        },
         async deleteProduct(id) {
             try {
                 await this.$axios.$delete(`/api/products/${id}`)

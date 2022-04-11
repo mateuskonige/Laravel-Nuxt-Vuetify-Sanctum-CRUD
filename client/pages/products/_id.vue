@@ -76,10 +76,9 @@ export default {
             try {
                 await this.$axios.$put(`api/products/${this.$route.params.id}`, this.form)
                 this.errors = []
-                this.$fetch()
+                this.$emit('saved')
+                this.$router.push('/products')
                 this.$toast.success('Successfully updated', { duration: 2000 })
-
-
             } catch (err) {
                 if (err.response.status = 422) {
                     this.errors = err.response.data.errors

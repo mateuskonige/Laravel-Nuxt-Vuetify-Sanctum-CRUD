@@ -4,7 +4,7 @@
             <NuxtLogo />
         </v-container>
 
-        <Nuxt />
+        <Nuxt keep-alive />
     </v-app>
 </template>
 

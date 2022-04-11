@@ -21,7 +21,7 @@
                             >
                                 <v-icon light>mdi-eye</v-icon>
                             </v-btn>
-                            <v-btn depressed color="error" @click="deleteProduct(product.id)">
+                            <v-btn v-if="$auth.user.permissions.includes('delete products')" depressed color="error" @click="deleteProduct(product.id)">
                                 <v-icon light>mdi-delete</v-icon>
                             </v-btn>
                         </td>

@@ -2,8 +2,12 @@
     <v-container>
         <div class="d-flex align-center justify-space-between">
             <h1>Products</h1>
-            <Modal :form="form" :dialog="dialog" @saved="reFetch">product</Modal>
+            <div v-if="$auth.user.permissions.includes('create products')">
+                <Modal :form="form" :dialog="dialog" @saved="reFetch">product</Modal>
+            </div>
         </div>
+
+        {{$auth.user.permissions}}
 
         <Loading v-if="$fetchState.pending" />
         <div v-else>
